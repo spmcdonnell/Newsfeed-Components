@@ -85,6 +85,34 @@ const data = [
         thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+    },
+    {
+        title: 'My Custom Article',
+        date: 'Mar 14th, 2019',
+        firstParagraph: `Bulbasaur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ivysaur Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Venusaur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Charmander Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Charmeleon Lorem ipsum dolor sit amet, consectetur adipiscing elit. Charizard Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Squirtle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Wartortle Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit. Blastoise Lorem ipsum dolor sit amet, consectetur adipiscing elit. Caterpie Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit. Metapod Lorem ipsum dolor sit amet, consectetur adipiscing elit. Butterfree
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Weedle Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Kakuna Lorem ipsum dolor sit amet, consectetur adipiscing elit. Beedrill Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit.`,
+
+        secondParagraph: `Pidgey Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pidgeotto Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Pidgeot Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rattata Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Raticate Lorem ipsum dolor sit amet, consectetur adipiscing elit. Spearow Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Fearow Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ekans Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Arbok Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pikachu Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Raichu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sandshrew Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Sandslash Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nidoran Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Nidorina Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nidoqueen Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Nidoran Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nidorino Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit. Nidoking Lorem ipsum`,
+
+        thirdParagraph: `Gotta catch 'em all Horsea gym Ninjask Absol Sinnoh Poliwag. Gotta catch 'em all Youngster wants to fight Soda Pop Floatzel 
+        Leech Life Seismitoad Ariados. Earthquake Pokemon Glitch City Tail Whip Skitty Ekans Dialga. Ut aliquip ex ea commodo consequat James 
+        Castform Lotad the power that's inside Burnt Berry Makuhita. Ghost Ariados Corphish Dusclops Golbat Gligar Zweilous.`
     }
 ];
 
@@ -117,20 +145,44 @@ function createArticle(data) {
     // Create elements
     var article = document.createElement('div'),
         articleTitle = document.createElement('h2'),
+        articleDate = document.createElement('p'),
         articleParaOne = document.createElement('p'),
         articleParaTwo = document.createElement('p'),
         articleParaThree = document.createElement('p'),
-        articleButton = document.createElement('h2');
+        articleButton = document.createElement('span');
+
+    // Add element classes
+    article.classList.add('article');
+    articleDate.classList.add('date');
+    articleButton.classList.add('expandButton');
+
+    // Fill element content
+    articleTitle.textContent = data.title;
+    articleDate.textContent = data.date;
+    articleParaOne.textContent = data.firstParagraph;
+    articleParaTwo.textContent = data.secondParagraph;
+    articleParaThree.textContent = data.thirdParagraph;
+    articleButton.textContent = 'Expand';
 
     // Add article
     document.querySelector('.articles').appendChild(article);
 
     // Add content to article
     article.appendChild(articleTitle);
+    article.appendChild(articleDate);
     article.appendChild(articleParaOne);
     article.appendChild(articleParaTwo);
     article.appendChild(articleParaThree);
     article.appendChild(articleButton);
 }
 
-createArticle();
+data.forEach(article => createArticle(article));
+
+document.querySelector('.articles').addEventListener('click', function(e) {
+    var clickTarget = e.target;
+
+    if (clickTarget.classList.contains('expandButton')) {
+        document.querySelectorAll('.article').forEach(article => article.classList.remove('article-open'));
+        clickTarget.parentNode.classList.toggle('article-open');
+    }
+});
